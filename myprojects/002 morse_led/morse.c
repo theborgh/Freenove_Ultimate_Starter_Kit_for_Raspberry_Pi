@@ -35,12 +35,21 @@ struct MorseLetter morseTable[] = {
 	{ character: 'O', code: {LONG, LONG, LONG, STOP}},
 	{ character: 'P', code: {SHORT, LONG, LONG, SHORT, STOP}},
 	{ character: 'Q', code: {LONG, LONG, SHORT, LONG, STOP}},
+	{ character: 'R', code: {SHORT, LONG, SHORT, STOP}},
+	{ character: 'S', code: {SHORT, SHORT, SHORT, STOP}},
+	{ character: 'T', code: {LONG, STOP}},
+	{ character: 'U', code: {SHORT, SHORT, LONG, STOP}},
+	{ character: 'V', code: {SHORT, SHORT, SHORT, LONG, STOP}},
+	{ character: 'W', code: {SHORT, LONG, LONG, STOP}},
+	{ character: 'X', code: {LONG, SHORT, SHORT, LONG, STOP}},
+	{ character: 'Y', code: {LONG, SHORT, LONG, LONG, STOP}},
+	{ character: 'Z', code: {LONG, LONG, SHORT, SHORT, STOP}},
 };
 
 int getMorseIndexForLetter(char c) {
 	int i;
 
-	for (i = 0; i < 3; i++) {
+	for (i = 0; i < 26; i++) {
 		if (morseTable[i].character == toupper(c)) {
 			return i;
 		}
@@ -71,7 +80,7 @@ int main(int argc, char *argv[]) {
 		int length = strlen(argv[i]);
 		int morseIndex, codeLength;
 
-		printf("argv[%d]: %s (length: %d)\n", i, argv[i], length);
+		printf("%s\n", argv[i]);
 
 		// output morse code for this argv
 		for (j = 0; j < length; j++) {
@@ -87,7 +96,9 @@ int main(int argc, char *argv[]) {
 					} else {
 						putchar('.');
 					}
-				}
+				} else {
+          printf("ERROR: letter %c not found in the morse table\n", argv[i][j]);
+        }
 			}
       // Break between letters
 			printf("\n");
