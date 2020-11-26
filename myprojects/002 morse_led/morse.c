@@ -12,6 +12,12 @@
 #define LONG 1
 #define STOP 2
 
+#define LONGTIME 800
+#define SHORTTIME 200
+#define CODEBREAK 200
+#define LETTERBREAK 1000
+#define WORDBREAK 2000
+
 struct MorseLetter {
 	char character;
 	int code[6];
@@ -58,23 +64,11 @@ int getMorseIndexForLetter(char c) {
 	return -1;
 }
 
-void blinkWithArrayPattern(int intervalArray[], int length, int repeat) {
-	int i;
-	int level;
-	
-	do {
-		level = LOW;
-		
-		for (i = 0; i < length; i++) {
-			level = level == HIGH ? LOW : HIGH;
-			digitalWrite(ledPin, level); // Writes HIGH (high voltage) or LOW (low voltage) to the specified wiringPi pin. The pin must have been previouly set to output mode.
-			delay(intervalArray[i]);
-		}
-	} while (repeat);
-}
-
 int main(int argc, char *argv[]) {	
 	int i, j, k;
+
+  wiringPiSetup(); // Initialize wiringPi (required for each wiringPi program)
+	pinMode(ledPin, OUTPUT); // Set the pin mode (required after the setup call)
 
 	for (i = 1; i < argc; i++) {
 		int length = strlen(argv[i]);
@@ -93,20 +87,30 @@ int main(int argc, char *argv[]) {
 				if (morseIndex != -1) {
 					if (morseTable[morseIndex].code[k] == LONG) {
 						putchar('-');
+            digitalWrite(ledPin, HIGH);
+            delay(LONGTIME); 
+            digitalWrite(ledPin, LOW);
+
 					} else {
 						putchar('.');
+            digitalWrite(ledPin, HIGH);
+            delay(SHORTTIME); 
+            digitalWrite(ledPin, LOW);
 					}
 				} else {
           printf("ERROR: letter %c not found in the morse table\n", argv[i][j]);
         }
+        // Break between codes
+        delay(CODEBREAK);
 			}
       // Break between letters
 			printf("\n");
+      delay(LETTERBREAK);
 		}
     // Break between words
 		printf("\n");
+    delay(WORDBREAK);
 	}
-	
 
 	return 0;
 }
