@@ -21,6 +21,20 @@ struct MorseLetter morseTable[] = {
 	{ character: 'A', code: {SHORT, LONG, STOP}},
 	{ character: 'B', code: {LONG, SHORT, SHORT, SHORT, STOP}},
 	{ character: 'C', code: {LONG, SHORT, LONG, SHORT, STOP}},
+	{ character: 'D', code: {LONG, SHORT, SHORT, STOP}},
+	{ character: 'E', code: {SHORT, STOP}},
+	{ character: 'F', code: {SHORT, SHORT, LONG, SHORT, STOP}},
+	{ character: 'G', code: {LONG, LONG, SHORT, STOP}},
+	{ character: 'H', code: {SHORT, SHORT, SHORT, SHORT, STOP}},
+	{ character: 'I', code: {SHORT, SHORT, STOP}},
+	{ character: 'J', code: {SHORT, LONG, LONG, LONG, STOP}},
+	{ character: 'K', code: {LONG, SHORT, LONG, STOP}},
+	{ character: 'L', code: {SHORT, LONG, SHORT, SHORT, STOP}},
+	{ character: 'M', code: {LONG, LONG, STOP}},
+	{ character: 'N', code: {LONG, SHORT, STOP}},
+	{ character: 'O', code: {LONG, LONG, LONG, STOP}},
+	{ character: 'P', code: {SHORT, LONG, LONG, SHORT, STOP}},
+	{ character: 'Q', code: {LONG, LONG, SHORT, LONG, STOP}},
 };
 
 int getMorseIndexForLetter(char c) {
@@ -65,13 +79,20 @@ int main(int argc, char *argv[]) {
 			// find morseTable item with correct letter
 			morseIndex = getMorseIndexForLetter(argv[i][j]);
 
-			printf("Letter %c (index %d) morse code is: ", argv[i][j], morseIndex);
+			printf("%c ", toupper(argv[i][j]));
 			for (k = 0; morseTable[morseIndex].code[k] != STOP; k++) {
-				if(morseTable[morseIndex].code[k] == LONG) putchar('-');
-				else putchar('.');
+				if (morseIndex != -1) {
+					if (morseTable[morseIndex].code[k] == LONG) {
+						putchar('-');
+					} else {
+						putchar('.');
+					}
+				}
 			}
+      // Break between letters
 			printf("\n");
 		}
+    // Break between words
 		printf("\n");
 	}
 	
