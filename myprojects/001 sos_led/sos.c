@@ -1,3 +1,6 @@
+// Take a pattern array of high/low times and display a blinking LED light with that pattern
+// Expands on Tutorial Project 1
+
 #include <wiringPi.h>
 #include <stdio.h>
 
